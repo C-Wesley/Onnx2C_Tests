@@ -33,7 +33,7 @@ def _convert_data_set(data_loader, sub_folder, file_name):
     for input, target in zip(inputs, targets):
         data = np.reshape(np.array(input, np.float32), (784))
 
-        file_path = f"txt_data\\{sub_folder}\\{file_name}_{index}"
+        file_path = f"txt_data\\{sub_folder}\\{file_name}_{index}.txt"
         file = open(file_path, "w")
         for x in data.tolist():
             x = round(x, 8)

@@ -17,7 +17,7 @@ def predict(session, a_input, target, class_mapping):
 def print_input(input):
     counter=0
     for value in input:
-        print(f"{value:.6f}", end=" ")
+        print(f"{value:.7f}", end=" ")
         counter +=1
         if counter == 28:
             print()
@@ -31,11 +31,12 @@ def make_predictions(inputs, actuals, session, class_mapping):
     
         print_input(input)
         print()
-        print(f"{predicted=}")
+        print(f"{expected=}")
+
         for prediction in predictions[0][0]:
             print(f"{float(prediction):.6f}", end=" ")
         print()
-        print(f"{expected=}")
+        print(f"{predicted=}")
         print()
 
 
