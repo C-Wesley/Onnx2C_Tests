@@ -5,7 +5,7 @@ from torchvision.transforms import ToTensor
 import os
 import numpy as np
 
-def download_mnist_datasets():
+def download_mnist_datasets(train_number, validation_number):
     train_data = datasets.MNIST(
         root="downloaded", # Where to store the data 
         download=True,
@@ -18,11 +18,13 @@ def download_mnist_datasets():
         train=False, # Intersted in the validation data
         transform = ToTensor() # Normalizes the pictures
     )
+    
+    train_data_loader = DataLoader(train_data, batch_size=train_number)
+    validation_data_loader = DataLoader(validation_data, batch_size=validation_number)
 
-    return train_data, validation_data
+    return train_data_loader, validation_data_loader
 
 def _convert_data_set(data_loader, sub_folder, file_name):
-
     if not os.path.isdir(f"txt_data\\{sub_folder}"):
         os.mkdir(f"txt_data\\{sub_folder}")
 
@@ -41,10 +43,9 @@ def _convert_data_set(data_loader, sub_folder, file_name):
         index += 1
         print(f"{file_path} created with expected: {target}")
 
-def convert_mnist_to_csv(train_data, validation_data, train_number, validation_number):
+def convert_mnist_to_txt(train_number, validation_number):
 
-    train_data_loader = DataLoader(train_data, batch_size=train_number)
-    validation_data_loader = DataLoader(validation_data, batch_size=validation_number)
+    train_data_loader, validation_data_loader = download_mnist_datasets(train_number, validation_number)
 
     if not os.path.isdir("txt_data"):
         os.mkdir(".\\txt_data")
@@ -58,7 +59,6 @@ def convert_mnist_to_csv(train_data, validation_data, train_number, validation_n
 
 if __name__ == "__main__":
     """ Example of generating txt data """
-    train, validation = download_mnist_datasets()
-    convert_mnist_to_csv(train, validation,3 ,3)
+    convert_mnist_to_txt(train_number=10, validation_number=10)
 
 
