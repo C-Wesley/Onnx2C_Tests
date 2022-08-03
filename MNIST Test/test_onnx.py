@@ -1,9 +1,6 @@
-from turtle import down
 import onnxruntime as ort
-import numpy as np
 from generate_data import download_mnist_datasets
 from load_data_from_txt import load_data_from_txt
-import os
 
 def predict(session, a_input, target, class_mapping):
     
