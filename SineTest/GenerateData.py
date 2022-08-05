@@ -48,17 +48,13 @@ def generate_data(samples):
 
 def _convert_data_set_to_txt(x_values, y_values):
 
-    if not os.path.isdir(".\\txt_data"):
-        os.mkdir("txt_data")
+    if not os.path.isdir(".\\SineTest\\txt_data"):
+        os.mkdir(".\\SineTest\\txt_data")
 
-    x_file = open("txt_data\\x_values.txt", "w")
+    x_file = open(".\\SineTest\\txt_data\\x_values.txt", "w")
     for x in x_values:
         x_file.write(str(x) + "\n")
 
-    y_file = open("txt_data\\y_values.txt", "w")
+    y_file = open(".\\SineTest\\txt_data\\y_values.txt", "w")
     for y in y_values:
         y_file.write(str(y) + "\n")
-
-
-if __name__ == "__main__":
-    generate_data(1000)

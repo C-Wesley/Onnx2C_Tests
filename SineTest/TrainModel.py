@@ -1,11 +1,11 @@
-import tensorflow as tf 
+import tensorflow as tf
 from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 import tf2onnx
 import onnx
 import os
 
-from generate_data import generate_data
+from SineTest.GenerateData import generate_data
 
 
 class SineModel():
@@ -42,19 +42,19 @@ class SineModel():
 
     def save_as_onnx(self):
 
-        if not os.path.isdir("trained_models"):
-            os.mkdir("trained_models")
+        if not os.path.isdir(".\\SineTest\\trained_models"):
+            os.mkdir(".\\SineTest\\trained_models")
 
         input_signature = [tf.TensorSpec([1], tf.float32, name='x')]
         onnx_model, _ = tf2onnx.convert.from_keras(self.model, input_signature)
-        onnx.save(onnx_model, "trained_models\\sine.onnx")
+        onnx.save(onnx_model, ".\\SineTest\\trained_models\\sine.onnx")
 
     def save_as_tf(self):
 
-        if not os.path.isdir("trained_models"):
-            os.mkdir("trained_models")
+        if not os.path.isdir(".\\SineTest\\trained_models"):
+            os.mkdir(".\\SineTest\\trained_models")
 
-        self.model.save("trained_models\\sine_model")
+        self.model.save(".\\SineTest\\trained_models\\sine_model")
 
     def graph_train_history(self, starting_index):
 
@@ -76,10 +76,10 @@ class SineModel():
         plt.show()
 
 
-if __name__ == "__main__":
+def train_a_model(epochs: int, batch_size: int):
     MySineModel = SineModel()
 
-    MySineModel.train(1000, 8)
+    MySineModel.train(epochs, batch_size)
     MySineModel.graph_train_history(100)
     MySineModel.evaluate()
     MySineModel.save_as_onnx()

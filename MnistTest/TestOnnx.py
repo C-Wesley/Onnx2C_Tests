@@ -1,6 +1,6 @@
 import onnxruntime as ort
-from generate_data import download_mnist_datasets
-from load_data_from_txt import load_data_from_txt
+from GenerateData import download_mnist_datasets
+from LoadDataFromTxt import load_data_from_txt
 
 def predict(session, a_input, target, class_mapping):
     

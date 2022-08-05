@@ -1,6 +1,5 @@
 import onnxruntime as ort
-from load_data_from_txt import load_data_from_txt
-import matplotlib.pyplot as plt
+from SineTest.LoadDataFromTxt import load_data_from_txt
 
 
 def predict(session, a_input):
@@ -9,8 +8,8 @@ def predict(session, a_input):
     return prediction
 
 
-if __name__ == "__main__":
-    ort_session = ort.InferenceSession("trained_models\\sine.onnx")
+def run_predictions():
+    ort_session = ort.InferenceSession(".\\SineTest\\trained_models\\sine.onnx")
 
     x_data, y_data = load_data_from_txt()
 
@@ -23,7 +22,3 @@ if __name__ == "__main__":
         print(f"Input: {input}")
         print(f"Output: {output}")
         print("\n")
-
-    # plt.plot(x_data, y_data, "b.")
-    # plt.plot(x_data, predictions, "r.")
-    # plt.show()
