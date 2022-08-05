@@ -9,7 +9,7 @@ def predict(session, a_input):
 
 
 def run_predictions():
-    ort_session = ort.InferenceSession(".\\SineTest\\trained_models\\sine.onnx")
+    ort_session = ort.InferenceSession("SineTest\\trained_models\\sine.onnx")
 
     x_data, y_data = load_data_from_txt()
 
@@ -19,6 +19,6 @@ def run_predictions():
         predictions.append(predict(ort_session, x)[0][0][0])
 
     for input, output in zip(x_data, predictions):
-        print(f"Input: {input}")
-        print(f"Output: {output}")
-        print("\n")
+        print(f"Input: {input:.6f}")
+        print(f"Output: {output:.6f}")
+        print()

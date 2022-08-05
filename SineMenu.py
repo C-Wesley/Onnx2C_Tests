@@ -32,20 +32,20 @@ def print_title():
     print(f"{Style.RESET_ALL}")
 
 
-def call_generate_data(len_of_choices: int):
-
-    message = "How many samples of data would you like?"
-    num = get_input(len_of_choices, message)
+def call_generate_data():
+    max = 1000
+    message = "How many samples of data would you like to generate?"
+    num = get_input(max, message)
     generate_data(num)
     print("\n\nData Generated!")
 
 
-def call_test_onnx(len_of_choices: int):
+def call_test_onnx():
     run_predictions()
-    print("\n\nPredictions Ran!")
+    print("\n\Inferences Ran!")
 
 
-def call_test_converted(len_of_choices: int):
+def call_test_converted():
     original = os.getcwd()
     os.chdir("SineTest\\c_inference\\")
 
@@ -56,15 +56,19 @@ def call_test_converted(len_of_choices: int):
 
     os.chdir(original)
 
-    print("\n\nInfrances Ran!")
+    print("\n\Inferences Ran!")
 
 
-def call_compare_inferences(len_of_choices: int):
-    pass
+def call_compare_inferences():
+    
+    run_predictions()
+
+    call_test_converted()
 
 
-def call_main_menu(len_of_choices: int):
-    pass
+def call_main_menu():
+    import MainMenu
+    MainMenu.main_menu()
 
 
 def sine_menu():
@@ -73,7 +77,7 @@ def sine_menu():
     print_title()
 
     choices = {
-        1: "Generate Data -> Updates the dir 'sine_Test\\txt_data' with new data.",
+        1: "Generate Data -> Updates the dir 'SineTest\\txt_data' with new data.",
         2: "Test Onnx File -> Run inferences using the sine.onnx file and onnxruntime in python.",
         3: "Test Convereted C -> Run inferences using the sine.c file.", 
         4: "Compare Inferences -> Run both inferences.",
@@ -91,4 +95,4 @@ def sine_menu():
     print_title()
     print_choices(choices)
     message = "Please select a number from the above options: "
-    choice_functions[get_input(len(choices), message)](len(choices))
+    choice_functions[get_input(len(choices), message)]()

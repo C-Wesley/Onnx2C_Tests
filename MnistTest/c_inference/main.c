@@ -60,7 +60,7 @@ void process_txt_data(char dataset[])
         char current_path[200];
         _getcwd(current_path, 200);
 
-        printf("CWD: %s\n", current_path);
+        //printf("CWD: %s\n", current_path);
         strcat(current_path, "\\*.txt");
 
         WIN32_FIND_DATA FindFileData;
@@ -77,7 +77,7 @@ void process_txt_data(char dataset[])
             do
             {
                 printf("\n");
-                printf("Processing File: %s\n", FindFileData.cFileName);
+                //printf("Processing File: %s\n", FindFileData.cFileName);
                 FILE *fpt;
                 fpt = fopen(FindFileData.cFileName, "r");
                 
@@ -105,7 +105,8 @@ void process_txt_data(char dataset[])
                         }
                         index++;
                     }
-                    print_data(data, expected);
+                    //print_data(data, expected);
+                    printf("Expected: %d\n", expected);
                     predict(data);
                     fclose(fpt);
                 }

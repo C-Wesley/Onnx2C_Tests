@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from GenerateData import download_mnist_datasets
+from MnistTest.GenerateData import download_mnist_datasets
 import sys
 import numpy as np
 import os

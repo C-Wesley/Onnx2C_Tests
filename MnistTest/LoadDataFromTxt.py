@@ -5,7 +5,7 @@ import numpy as np
 def load_data_from_txt(path):
     if path =="training" or path =="validation":
         original_path = os.getcwd()
-        os.chdir(f"txt_data\\{path}")
+        os.chdir(f"MnistTest\\txt_data\\{path}")
         files = os.listdir()
 
         inputs = []

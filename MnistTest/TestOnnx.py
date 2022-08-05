@@ -1,6 +1,6 @@
 import onnxruntime as ort
-from GenerateData import download_mnist_datasets
-from LoadDataFromTxt import load_data_from_txt
+from MnistTest.GenerateData import download_mnist_datasets
+from MnistTest.LoadDataFromTxt import load_data_from_txt
 
 def predict(session, a_input, target, class_mapping):
     
@@ -20,14 +20,14 @@ def print_input(input):
             print()
             counter =0
 
-def make_predictions(inputs, actuals, session, class_mapping):
+def make_predictions(inputs, actuals, session, class_mapping, display_input:bool = False):
     for index, input in enumerate(inputs):
         target = actuals[index]
 
         predicted, predictions, expected = predict(session, input, target, class_mapping)
-    
-        print_input(input)
-        print()
+
+        if display_input:
+            print_input(input)
         print(f"{expected=}")
 
         for prediction in predictions[0][0]:
@@ -36,9 +36,7 @@ def make_predictions(inputs, actuals, session, class_mapping):
         print(f"{predicted=}")
         print()
 
-
-if __name__ == "__main__":
-    
+def run_predictions():
     class_mapping = [
         "0",
         "1",
@@ -55,6 +53,6 @@ if __name__ == "__main__":
     training_inputs, training_actuals = load_data_from_txt("training")
     validation_inputs, validation_actuals = load_data_from_txt("validation")
 
-    ort_session = ort.InferenceSession("trained_models\\mnist.onnx")
+    ort_session = ort.InferenceSession("MnistTest\\trained_models\\mnist.onnx")
     make_predictions(training_inputs, training_actuals, ort_session, class_mapping)
     make_predictions(validation_inputs, validation_actuals, ort_session, class_mapping)
