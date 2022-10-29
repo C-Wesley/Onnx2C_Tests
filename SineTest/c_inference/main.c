@@ -5,7 +5,7 @@
 #include <direct.h>
 #include "model/sine.h"
 
-void get_data_from_txt(float data[1000])
+void get_data_from_txt(float data[1000], int *num_values)
 {
 
     char path[] = "..\\txt_data\\x_values.txt";
@@ -27,16 +27,16 @@ void get_data_from_txt(float data[1000])
             sscanf(str, "%f", &data[index]);
             index ++;
         }
+        *num_values = index;
         fclose(fpt);
     }
 }
 
-void make_predictions(float data[1000], float predictions[1000])
+void make_predictions(float data[1000], float predictions[1000], int *num_values)
 {
     float input[1]; 
     float prediction[1][1]; 
-
-    for (int n=0; n<1000; n++)
+    for (int n=0; n<*num_values; n++)
     {
         input[0] = data[n]; 
         entry(input, prediction);
@@ -46,13 +46,13 @@ void make_predictions(float data[1000], float predictions[1000])
 
 int main()
 {
+    int num_values; 
     float data[1000];
-    get_data_from_txt(data);
-    
+    get_data_from_txt(data, &num_values);
     float predictions[1000];
-    make_predictions(data, predictions);
+    make_predictions(data, predictions, &num_values);
 
-    for (int j = 0; j<1000; j++)
+    for (int j = 0; j<num_values; j++)
     {
         printf("Input: %f\n", data[j]);
         printf("Output: %f\n", predictions[j]);

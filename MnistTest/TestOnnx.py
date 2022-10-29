@@ -1,6 +1,10 @@
 import onnxruntime as ort
-from MnistTest.GenerateData import download_mnist_datasets
+import csv
+import os
+
 from MnistTest.LoadDataFromTxt import load_data_from_txt
+
+
 
 def predict(session, a_input, target, class_mapping):
     
@@ -20,7 +24,17 @@ def print_input(input):
             print()
             counter =0
 
-def make_predictions(inputs, actuals, session, class_mapping, display_input:bool = False):
+def make_predictions(inputs, actuals, session, class_mapping, data_set, display_input:bool = False):
+    if not os.path.isdir("MnistTest\\predictions"):
+        os.mkdir("MnistTest\\predictions")
+        file = open("MnistTest\\prediciton\\python_inferences.csv", 'w', encoding="UTF8", newline="")
+    else:
+        file = open("MnistTest\\predictions\\python_inferences.csv", 'a', encoding='UTF8', newline="")
+    
+    csv_file = csv.writer(file)
+    header = ["Expected", "Predicted", "Predictions", data_set]
+    csv_file.writerow(header)
+
     for index, input in enumerate(inputs):
         target = actuals[index]
 
@@ -30,11 +44,17 @@ def make_predictions(inputs, actuals, session, class_mapping, display_input:bool
             print_input(input)
         print(f"{expected=}")
 
+        data = [expected, predicted]
         for prediction in predictions[0][0]:
             print(f"{float(prediction):.6f}", end=" ")
+            data.append(f"{prediction:.6f}")
         print()
         print(f"{predicted=}")
         print()
+        
+
+        
+        csv_file.writerow(data)
 
 def run_predictions():
     class_mapping = [
@@ -54,5 +74,12 @@ def run_predictions():
     validation_inputs, validation_actuals = load_data_from_txt("validation")
 
     ort_session = ort.InferenceSession("MnistTest\\trained_models\\mnist.onnx")
-    make_predictions(training_inputs, training_actuals, ort_session, class_mapping)
-    make_predictions(validation_inputs, validation_actuals, ort_session, class_mapping)
+
+    # Reset the Inference File
+    if os.path.isdir("MnistTest\\predictions"):
+        files = os.listdir("MnistTest\\predictions")
+        for file in files:
+            os.remove(f"MnistTest\\predictions\\{file}")
+
+    make_predictions(training_inputs, training_actuals, ort_session, class_mapping, "training")
+    make_predictions(validation_inputs, validation_actuals, ort_session, class_mapping, "validation")

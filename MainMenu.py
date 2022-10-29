@@ -1,5 +1,6 @@
 from colorama import Fore, Style
 import os
+import sys
 
 # Custom Menu Stuff
 from MenuUtils import print_choices, get_input
@@ -20,7 +21,7 @@ def print_title():
     print(r"                                   |__|/ \|__|                         ")
 
     print(f"{Fore.GREEN}", end="")
-    print(r"_________  _______   ________  _________  ________        ")
+    print(r" _________  _______   ________  _________  ________        ")
     print(r"|\___   ___\\  ___ \ |\   ____\|\___   ___\\   ____\      ")
     print(r"\|___ \  \_\ \   __/|\ \  \___|\|___ \  \_\ \  \___|_     ")
     print(r"     \ \  \ \ \  \_|/_\ \_____  \   \ \  \ \ \_____  \    ")
@@ -32,15 +33,20 @@ def print_title():
     print(f"{Style.RESET_ALL}")
 
 
+def call_exit():
+    sys.exit()
+
 def main_menu():
 
     choices = {
         1: "MNIST Tests",
-        2: "Sine Test"
+        2: "Sine Test",
+        3: "Exit"
     }
     choice_functions = {
         1: mnist_menu,
-        2: sine_menu
+        2: sine_menu,
+        3: call_exit
     }
 
     os.system("cls")

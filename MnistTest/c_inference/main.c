@@ -22,19 +22,28 @@ void print_data(float data[1][784], int expected)
     printf("Expected: %d\n", expected);
 }
 
-void predict(float data[1][784])
+void predict(float data[1][784], int expected)
 {
     float output[1][10]; 
     entry(data, output);
 
+    char predictions_str[1024]; 
+    char predictions_buffer[1024];
+    printf("Expected: %d\n", expected);
     for (int x=0; x<10; x++)
     {
         printf("%f ", output[0][x]);
+        
+        gcvt(output[0][x], 7, predictions_buffer);
+        strcat(predictions_str, predictions_buffer);
+        strcat(predictions_str, ", ");
     }
     printf("\n");
 
     float max = -1;
-    int index = 0;
+    int index = 0; 
+
+
     for (int x=0; x<10; x++)
     {
         if (output[0][x] > max)
@@ -44,6 +53,13 @@ void predict(float data[1][784])
         }
     }
     printf("Predicted: %d\n", index);
+
+    // Write to CSV File
+    FILE *fpt;
+    fpt = fopen("..\\predictions\\c_inferences.csv", "a");
+    fprintf(fpt, "%d, %d, %s\n", expected, index, predictions_str);
+    fclose(fpt);
+
 }
 
 void process_txt_data(char dataset[])
@@ -106,8 +122,7 @@ void process_txt_data(char dataset[])
                         index++;
                     }
                     //print_data(data, expected);
-                    printf("Expected: %d\n", expected);
-                    predict(data);
+                    predict(data, expected);
                     fclose(fpt);
                 }
             } while (FindNextFile(hFind, &FindFileData));

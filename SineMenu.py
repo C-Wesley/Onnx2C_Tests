@@ -20,7 +20,7 @@ def print_title():
     print(r"   \|_________|                             ")
 
     print(f"{Fore.GREEN}", end="")
-    print(r"_________  _______   ________  _________  ________        ")
+    print(r" _________  _______   ________  _________  ________        ")
     print(r"|\___   ___\\  ___ \ |\   ____\|\___   ___\\   ____\      ")
     print(r"\|___ \  \_\ \   __/|\ \  \___|\|___ \  \_\ \  \___|_     ")
     print(r"     \ \  \ \ \  \_|/_\ \_____  \   \ \  \ \ \_____  \    ")
@@ -71,10 +71,11 @@ def call_main_menu():
     MainMenu.main_menu()
 
 
-def sine_menu():
-    os.system("cls")
-
-    print_title()
+def sine_menu(clear=True):
+    if clear:
+        os.system("cls")
+    else:
+        print("\n\n")
 
     choices = {
         1: "Generate Data -> Updates the dir 'SineTest\\txt_data' with new data.",
@@ -91,8 +92,8 @@ def sine_menu():
         5: call_main_menu
     }
 
-    os.system("cls")
     print_title()
     print_choices(choices)
     message = "Please select a number from the above options: "
     choice_functions[get_input(len(choices), message)]()
+    sine_menu(clear=False)
